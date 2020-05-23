@@ -1,0 +1,84 @@
+@import "../../../style/colors"
+@import "../../../style/variables"
+    
+.card
+  height: 222px
+  width: 270px
+  cursor: pointer
+  background-color: $background-color
+
+  span
+    color: $grey-color
+  
+  .card-body
+    margin: 0
+    padding: 0 !important
+
+  .card-image
+    background-repeat: no-repeat
+    background-size: cover
+
+  .card-text
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    padding: 17px
+
+    .card-text-name
+      color: $dark-grey-color
+    
+    .card-text-count
+      color: $grey-color
+
+.item:hover
+  top: -10px
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important
+
+#showImageModal 
+  .close
+    font-size: 16px !important
+    font-weight: normal
+
+  .close-icon
+    padding-right: 0.35rem
+
+  .modal-content
+    border: 0
+    background-color: transparent
+    border-radius: .15rem
+
+  .modal-header
+    border-bottom: 0
+    padding: 0 1rem 0 0
+
+    button
+      opacity: 1
+      text-shadow: none
+      padding: 0 1rem 0 0
+
+
+.carousel-control-prev 
+  left: -70px
+
+.carousel-control-next 
+  right: -70px
+
+.carousel-item 
+  img 
+    height: 60vw
+    object-fit: cover
+    
+    @media (min-width: $bootstrap-sm) 
+      height: 350px
+
+
+.card-image.ng-lazyloaded 
+  animation: fadein ease 1.5s
+
+@keyframes fadein 
+  from
+    opacity: 0
+  to
+    opacity: 1
+

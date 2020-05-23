@@ -1,0 +1,10 @@
+<div class="background-image-container">
+    <img [src]="backgroundImage" loading="lazy" onerror="this.src='assets/images/gallery.png'" />
+</div>
+
+<div class="title-container mb-3">
+    <img src="assets/icons/back-icon.svg" *ngIf="!isCategoriesView" class="d-inline-block back-icon"
+        (click)="navigateBack()" />
+    <span class="title text-white d-inline-block">{{title | uppercase}}</span>
+    <img src="assets/icons/divider-icon.svg" />
+</div>

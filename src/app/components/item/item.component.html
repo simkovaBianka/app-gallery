@@ -1,0 +1,49 @@
+<div class="card border-0 shadow-sm item" (click)="isCategoriesView ? 
+    navigate('/gallery', itemsList[index].path) : openImageCarousel()">
+    <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#showImageModal"></button>
+    <div class="card-body d-flex flex-column col">
+        <div [defaultImage]="defaultImage" [lazyLoad]="itemsList[index].thumbnailImage" class="flex-fill card-image"
+            data-target="#carouselModal" [attr.data-slide-to]="index"></div>
+        <div [hidden]="!isCategoriesView" class="flex-grow card-text">
+            <span class="card-text-name">{{itemsList[index].name  | uppercase}}</span>
+            <span *ngIf="itemsList[index].hover" class="card-text-count">
+                {{itemsList[index].size}}
+            </span>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!isCategoriesView" class="modal fade" id="showImageModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <img class="d-inline-block close-icon" src="assets/icons/close-icon.svg" />
+                    <span class="d-inline-block text-white">ZAVRIEŤ</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="carouselModal" class="carousel slide carousel-fade" data-interval="false" data-ride="carousel"
+                    data-wrap="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item" *ngFor="let item of itemsList; let i = index"
+                            [ngClass]="{'active' : i == 0}">
+                            <img class="d-block w-100" [src]="item.realSizeImage" alt="item.name">
+                        </div>
+                    </div>
+                    <a *ngIf="itemsList.length > 1" class="carousel-control-prev" href="#carouselModal" role="button"
+                        data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a *ngIf="itemsList.length > 1" class="carousel-control-next" href="#carouselModal" role="button"
+                        data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

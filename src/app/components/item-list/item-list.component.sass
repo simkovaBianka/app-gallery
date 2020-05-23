@@ -1,0 +1,127 @@
+@import "../../../style/colors"
+@import "../../../style/variables"
+    
+.card
+  height: 222px
+  width: 270px
+  cursor: pointer
+  background-color: $background-color
+
+  span
+    color: $grey-color
+  
+  .card-body
+    margin: 0
+    padding: 0 !important
+
+  .card-image
+    background-repeat: no-repeat
+    background-size: cover
+
+  .card-text
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    padding: 17px
+
+    .card-text-name
+      color: $dark-grey-color
+    
+    .card-text-count
+      color: $grey-color
+
+.item:hover
+  top: -10px
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important
+
+#addGalleryModal, #addImageModal 
+  
+  .close
+    font-size: 16px !important
+    font-weight: normal
+
+    .close-icon
+      padding-right: 0.35rem
+
+  .modal-content
+    border: 0
+    background-color: transparent
+
+  .modal-header
+    border-bottom: 0
+    padding: 0 0 5px 0
+
+    button
+      opacity: 1
+      text-shadow: none
+    
+  .modal-body
+    background-color: white
+    padding: 20px
+    border-radius: 4px
+
+    .modal-title
+      font-size: 20px
+      color: $dark-grey-color
+      line-height: 1.291
+
+    .input-group
+      padding-bottom: 8px
+      margin-top: 35px
+      
+      button
+        width: 120px
+        height: 38px
+        border-radius: 4px
+        background-color: rgb(66, 199, 141)
+
+        .add-icon
+          padding-right: 0.35rem
+
+      .line-icon
+        margin-top: 8px
+        
+      ::placeholder 
+        color: $grey-color
+        font-size: 16px
+
+    input:focus
+      outline: none 
+
+  .add-image-btn
+    width: 120px
+    height: 38px
+    border-radius: 4px
+    background-color: rgb(66, 199, 141)
+    float: right
+
+.dropzone 
+  color: gray
+  width: 460px
+  height: 220px
+  padding: 2rem
+  text-align: center
+  border: dashed 2px $grey-color
+  position: relative
+  margin: 16px auto
+
+  input 
+    opacity: 0
+    position: absolute
+    z-index: 2
+    width: 100%
+    height: 100%
+    top: 0
+    left: 0
+
+  label 
+    width: 207px
+    height: 42px
+    border-radius: 4px
+    border: solid 2px $grey-color
+    padding: 8px 16px
+
+  h5
+    font-size: 16px
+    font-weight: bold

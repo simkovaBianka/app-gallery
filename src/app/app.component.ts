@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'app-gallery';
+  headerText: string = 'fotogaléria';
+  footerText: string = 'webdesign.bart.sk';
+
+  parentData: any;
 }
