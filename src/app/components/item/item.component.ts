@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Image, Gallery } from '../../model';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/service/data.service';
+import { SharedService } from 'src/app/service/shared.service';
 
 @Component({
   selector: 'item',
@@ -10,18 +11,20 @@ import { DataService } from 'src/app/service/data.service';
   providers: [DataService]
 })
 export class ItemComponent implements OnInit {
+  defaultImage = "assets/images/noimage.svg";
 
   @Input() index: number;
-  @Input() isCategoriesView: boolean;
   @Input() itemsList: (Image | Gallery)[];
+  isCategoriesView: boolean;
 
-  @Output() backgroundImageChange: EventEmitter<string> = new EventEmitter();
-
-  defaultImage = "assets/images/gallery.png";
-
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(
+    private router: Router,
+    private dataService: DataService,
+    private sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
+    this.sharedService.currentViewData.subscribe(data => this.isCategoriesView = data.isCategoriesView);
 
     let path: string = this.isCategoriesView ? ((<Gallery>this.itemsList[this.index]).image?.fullpath || '')
       : (<Image>this.itemsList[this.index]).fullpath;
@@ -35,10 +38,6 @@ export class ItemComponent implements OnInit {
       reader.readAsDataURL(blob)
       reader.onload = () => {
         this.itemsList[index].thumbnailImage = <string>reader.result;
-
-        if (index == 0) {
-          this.backgroundImageChange.emit(<string>reader.result);
-        }
       }
     });
 
@@ -49,12 +48,11 @@ export class ItemComponent implements OnInit {
         this.itemsList[index].realSizeImage = <string>reader.result;
 
         if (index == 0) {
-          this.backgroundImageChange.emit(<string>reader.result);
+          this.sharedService.changeBackgroundImage(<string>reader.result);
         }
       }
     });
   }
-
 
   openImageCarousel() {
     (<HTMLElement>document.getElementById("openModalButton")).click();

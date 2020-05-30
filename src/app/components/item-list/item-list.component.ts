@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { DataService } from '../../service/data.service';
 import { Image, Gallery } from '../../model';
+import { SharedService } from 'src/app/service/shared.service';
 
 export abstract class Constants {
   static readonly CATEGORY_TEXT: string = "Pridať kategóriu";
@@ -17,58 +18,60 @@ export abstract class Constants {
   providers: [DataService]
 })
 export class ItemListComponent implements OnInit {
-
   itemsList: (Image | Gallery)[] = [];
-  isCategoriesView: boolean = true;
-
-  backgroundImage: string;
   itemText: string;
+
+  // view data
+  isCategoriesView: boolean;
   title: string;
 
   constructor(
     private dataService: DataService,
+    private sharedService: SharedService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.sharedService.currentViewData.subscribe(data => {
+      this.title = data.title;
+      this.isCategoriesView = data.isCategoriesView;
+    })
+
     this.route.params.subscribe(params => {
       let path: string = params['path'];
-
       path ? this.getImages(path) : this.getGalleries();
     });
   }
 
   changeBackground(imageSource: string): void {
-    this.backgroundImage = imageSource;
+    this.sharedService.changeBackgroundImage(imageSource);
   }
 
   getGalleries(): void {
-    this.isCategoriesView = true;
+    this.sharedService.changeViewData({ "title": Constants.TITLE_TEXT, "isCategoriesView": true });
+    this.itemText = Constants.CATEGORY_TEXT;
 
     this.dataService.getAllGalleriesData().subscribe((data) => {
-      this.itemText = Constants.CATEGORY_TEXT;
-      this.title = Constants.TITLE_TEXT;
       this.itemsList = <Gallery[]>data['galleries'];
     })
   }
 
   getImages(path: string): void {
-    this.isCategoriesView = false;
+    this.sharedService.changeViewData({ "title": path, "isCategoriesView": false });
+    this.itemText = Constants.IMAGE_TEXT;
 
     this.dataService.getImages(path).subscribe((data) => {
-      this.itemText = Constants.IMAGE_TEXT;
-      this.title = path;
       this.itemsList = <Image[]>data['images'];
     });
   }
- 
+
 
   addGallery(name: string) {
     let regex = "/";
     let replacedName = name.replace(regex, "");
 
     this.dataService.addGallery(replacedName).subscribe((data) => {
-      data.imageSource = 'assets/images/gallery.png'; // without thumbnail image
+      data.imageSource = 'assets/images/noimage.svg'; // without thumbnail image
       this.itemsList.push(data);
     });
   }
@@ -88,7 +91,7 @@ export class ItemListComponent implements OnInit {
       (<Gallery>this.itemsList[index]).hover = true;
       let thumbnailImage = (<Gallery>this.itemsList[index]).thumbnailImage;
       let fullSizeImage = (<Gallery>this.itemsList[index]).realSizeImage;
-      this.backgroundImage = fullSizeImage ? fullSizeImage : thumbnailImage;
+      this.changeBackground(fullSizeImage ? fullSizeImage : thumbnailImage);
     }
   }
 

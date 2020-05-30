@@ -12,7 +12,6 @@ export class DataService {
   BASE_URL: string = 'http://api.programator.sk';
   //BASE_URL: string = 'http://localhost:8010/proxy';
 
-
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {

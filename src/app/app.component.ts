@@ -8,6 +8,4 @@ import { Component } from '@angular/core';
 export class AppComponent {
   headerText: string = 'fotogaléria';
   footerText: string = 'webdesign.bart.sk';
-
-  parentData: any;
 }

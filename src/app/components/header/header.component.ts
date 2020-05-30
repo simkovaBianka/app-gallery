@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { SharedService } from 'src/app/service/shared.service';
 
 
 @Component({
@@ -8,17 +9,30 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
-  @Input() title: string;
-  @Input() backgroundImage: string;
-  @Input() isCategoriesView: boolean;
+  defaultImage = "assets/images/noimage.svg";
 
+  title: string;
+  isCategoriesView: boolean;
+  backgroundImage: string;
 
-  constructor(private location: Location) { }
+  constructor(
+    private location: Location,
+    private sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
+    this.sharedService.currentViewData.subscribe(data => {
+      this.title = data.title;
+      this.isCategoriesView = data.isCategoriesView;
+    });
+
+    this.sharedService.currentbackgroundImageSource.subscribe(source =>
+      this.backgroundImage = source
+    );
   }
 
   navigateBack() {
+    this.sharedService.changeBackgroundImage(this.defaultImage);
     this.location.back();
   }
 
