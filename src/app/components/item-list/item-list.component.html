@@ -3,7 +3,7 @@
         <app-item [itemsList]="itemsList" [index]="i" (mouseenter)="mouseEnter(i)" (mouseleave)="item.hover = false">
         </app-item>
     </div>
-    <div  *ngIf="itemText"  class="col mb-4">
+    <div *ngIf="itemText" class="col mb-4">
         <div class="card justify-content-center text-center" data-toggle="modal"
             [attr.data-target]="isCategoriesView ? '#addGalleryModal' : '#addImageModal'">
             <img [src]="isCategoriesView ? 'assets/icons/add-circle-icon.svg' : 'assets/icons/add-image-icon.svg'" />
@@ -54,12 +54,23 @@
                 <span class="modal-title">{{itemText | uppercase}}</span>
                 <div class="dropzone" dragAndDrop (fileDropped)="onFileDropped($event)">
                     <input type="file" #fileDropRef id="fileDropRef" multiple
-                        (change)="fileBrowseHandler($event.target.files)" accept=".png, .jpg, .jpeg .svg" />
+                        (change)="fileBrowseHandler($event.target.files)" accept=".png, .jpg, .jpeg, .svg" />
                     <img style="width: 30px;" src="assets/icons/add-image-icon.svg" />
 
                     <h5>SEM PRESUNTE FOTKY</h5>
                     <h5>alebo</h5>
                     <label for="fileDropRef">VYBERTE SÚBORY</label>
+                </div>
+                <div class="files-list">
+                    <div class="single-file" *ngFor="let file of imagesToUpload; let i = index">
+                        <div class="info">
+                            <span class="name d-inline-block">
+                                {{ file?.name }}
+                            </span>
+                            <img src="assets/icons/delete-icon.svg" class="delete d-inline-block" width="14px" alt="file"
+                                (click)="deleteFile(i)">
+                        </div>
+                    </div>
                 </div>
                 <button class="btn btn-sm add-image-btn" type="button" (click)="addImage()" data-dismiss="modal">
                     <img class="d-inline-block add-icon" src="assets/icons/add-icon.svg" />

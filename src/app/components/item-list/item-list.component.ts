@@ -104,6 +104,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
       this.dataService.addImage(fullPath, image).subscribe((data) => {
         console.log(data);
         this.itemsList.push(data); // update view
+        this.imagesToUpload = [];
       });
     });
   }
@@ -145,6 +146,14 @@ export class ItemListComponent implements OnInit, OnDestroy {
     for (const item of files) {
       this.imagesToUpload.push(item);
     }
+  }
+
+  /**
+   * Delete file from files list
+   * @param index (File index)
+   */
+  deleteFile(index: number) {
+    this.imagesToUpload.splice(index, 1);
   }
 
   ngOnDestroy(): void {
