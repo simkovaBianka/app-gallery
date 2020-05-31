@@ -1,6 +1,6 @@
-<div class="row row-cols-2 row-cols-md-4">
+<div class="row row-cols-xl-4">
     <div *ngFor="let item of itemsList; let i = index" class="col mb-4">
-        <item [itemsList]="itemsList" [index]="i" (mouseenter)="onMouseEnter(i)" (mouseleave)="item.hover = false">
+        <item [itemsList]="itemsList" [index]="i" (mouseenter)="mouseEnter(i)" (mouseleave)="item.hover = false">
         </item>
     </div>
     <div class="col mb-4">
@@ -12,7 +12,10 @@
     </div>
 </div>
 
-<div class="modal fade" id="addGalleryModal">
+
+<!-- modals -->
+
+<div *ngIf="itemText" class="modal fade" id="addGalleryModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,16 +34,14 @@
                         <img class="d-inline-block add-icon" src="assets/icons/add-icon.svg" />
                         <span class="d-inline-block text-white">PRIDAŤ</span>
                     </button>
-
-                    <img class="line-icon" src="assets/icons/line-icon.svg" />
-
+                    <hr />
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="addImageModal">
+<div *ngIf="itemText" class="modal fade" id="addImageModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

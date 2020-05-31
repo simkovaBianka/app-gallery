@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Constants } from './shared/constants';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  headerText: string = 'fotogaléria';
-  footerText: string = 'webdesign.bart.sk';
+  headerText: string = Constants.HEADER_TEXT;
+  footerText: string = Constants.FOOTER_TEXT;
 }

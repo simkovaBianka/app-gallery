@@ -2,9 +2,9 @@
     <img [defaultImage]="defaultImage" [lazyLoad]="backgroundImage" />
 </div>
 
-<div class="title-container mb-3">
-    <img *ngIf="!isCategoriesView" src="assets/icons/back-icon.svg" class="d-inline-block back-icon"
+<div class="title-container">
+    <img *ngIf="!isCategoriesView" class="back-icon d-inline-block" src="assets/icons/back-icon.svg"
         (click)="navigateBack()" />
     <span class="title text-white d-inline-block">{{title | uppercase}}</span>
-    <img src="assets/icons/divider-icon.svg" />
+    <hr />
 </div>

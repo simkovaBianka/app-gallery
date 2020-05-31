@@ -1,9 +1,41 @@
 @import "../../../style/colors"
-@import "../../../style/variables"
+@import "../../../style/fonts"
+
+@import "node_modules/bootstrap/scss/functions"
+@import "node_modules/bootstrap/scss/variables"
+@import "node_modules/bootstrap/scss/mixins"
+
+$grid-breakpoints: (xxxs: 0, xxs: 320px, xs: 568px, sm: 667px, md: 768px, lg: 992px, xl: 1200px, xxl: 1440px, xxxl: 2500px)
+
+@include media-breakpoint-up(xxxl)
+  .card
+    height: 392px !important
+    width: 445px !important
+  
+    .card-text
+      padding: 26px !important
+      font-size: 24px !important
+
+  #showImageModal 
+    .close
+      font-size: $basic-font-xl !important
+
+      img 
+        height: 26px
+    
+    .carousel-control-prev 
+      left: -140px
+
+    .carousel-control-next 
+      right: -140px
+
+    .carousel-control-prev-icon, .carousel-control-next-icon
+      height: 40px
+      width: 40px
     
 .card
   height: 222px
-  width: 270px
+  width: 255px
   cursor: pointer
   background-color: $background-color
 
@@ -37,7 +69,7 @@
 
 #showImageModal 
   .close
-    font-size: 16px !important
+    font-size: $basic-font
     font-weight: normal
 
   .close-icon
@@ -57,22 +89,30 @@
       text-shadow: none
       padding: 0 1rem 0 0
 
+@include media-breakpoint-up(md)
+  .carousel-control-prev 
+    left: -70px
 
-.carousel-control-prev 
-  left: -70px
+  .carousel-control-next 
+    right: -70px
 
-.carousel-control-next 
-  right: -70px
 
 .carousel-item 
   img 
     height: 60vw
     object-fit: cover
     
-    @media (min-width: $bootstrap-sm) 
-      height: 350px
+@include media-breakpoint-up(xs)
+  .carousel-item 
+    img 
+      height: 50vh
+      width: 50vw
 
-.lazyLoad.ng-lazyloaded 
+.modal-dialog
+  max-width: 50vw !important
+  max-height: 50vh !important
+
+.lazy-load.ng-lazyloaded 
   animation: fadein ease 1.5s
 
 @keyframes fadein 

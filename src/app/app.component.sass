@@ -1,3 +1,11 @@
+@import "../style/colors"
+
+@import "node_modules/bootstrap/scss/functions"
+@import "node_modules/bootstrap/scss/variables"
+@import "node_modules/bootstrap/scss/mixins"
+
+$grid-breakpoints: (xxxs: 0, xxs: 320px, xs: 568px, sm: 667px, md: 768px, lg: 992px, xl: 1200px, xxl: 1440px, xxxl: 2500px)
+
 .header-text
     position: absolute
     z-index: 1
@@ -7,5 +15,29 @@
 
 .footer-text
     font-size: 14px
-    color: rgb(170, 170, 170)
+    color: $grey-color
     line-height: 2.213
+
+@include media-breakpoint-up(xxl)
+    .container 
+        max-width: 1140px !important
+  
+
+@include media-breakpoint-up(xxxl)
+    .container 
+        max-width: 2000px !important
+
+    .header-text
+        font-size: 34px
+        margin-top: 80px
+    
+    .footer-text
+        font-size: 24px
+
+
+
+
+
+  
+  
+

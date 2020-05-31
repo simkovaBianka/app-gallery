@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Constants } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
+  /**
+   * Service for storing and updating shared data.
+   */
+
   private viewData = new BehaviorSubject({
     "title": "",
     "isCategoriesView": true
   });
-  currentViewData = this.viewData.asObservable();
+  private backgroundImageSource = new BehaviorSubject(Constants.DEFAULT_IMAGE);
 
-  private backgroundImageSource = new BehaviorSubject("assets/images/noimage.svg");
+  currentViewData = this.viewData.asObservable();
   currentbackgroundImageSource = this.backgroundImageSource.asObservable();
 
   constructor() { }

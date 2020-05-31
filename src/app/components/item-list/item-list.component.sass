@@ -1,44 +1,51 @@
 @import "../../../style/colors"
-@import "../../../style/variables"
+@import "../../../style/fonts"
+
+@import "node_modules/bootstrap/scss/functions"
+@import "node_modules/bootstrap/scss/variables"
+@import "node_modules/bootstrap/scss/mixins"
+
+$grid-breakpoints: (xxxs: 0, xxs: 320px, xs: 568px, sm: 667px, md: 768px, lg: 992px, xl: 1200px, xxl: 1440px, xxxl: 2500px)
+
+@include media-breakpoint-up(xxxl)
+  .card
+    height: 392px !important
+    width: 445px !important
+
+    span
+      font-size: 30px !important
+
+    img
+      height: 56px !important
+
+  #addGalleryModal, #addImageModal 
+    .close
+      font-size: $basic-font-xl !important
+    .modal-title
+      font-size: 30px !important
+
+    .add-image-btn
+      width: 160px !important
+      height: 48px !important
     
+
 .card
   height: 222px
-  width: 270px
+  width: 255px
   cursor: pointer
   background-color: $background-color
 
   span
     color: $grey-color
-  
-  .card-body
-    margin: 0
-    padding: 0 !important
 
-  .card-image
-    background-repeat: no-repeat
-    background-size: cover
-
-  .card-text
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
-    padding: 17px
-
-    .card-text-name
-      color: $dark-grey-color
-    
-    .card-text-count
-      color: $grey-color
-
-.item:hover
-  top: -10px
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important
+.modal-dialog
+  max-width: 40vw !important
+  max-height: 50vh !important
 
 #addGalleryModal, #addImageModal 
   
   .close
-    font-size: 16px !important
+    font-size: $basic-font
     font-weight: normal
 
     .close-icon
@@ -62,7 +69,7 @@
     border-radius: 4px
 
     .modal-title
-      font-size: 20px
+      font-size: $modal-title-font
       color: $dark-grey-color
       line-height: 1.291
 
@@ -79,12 +86,16 @@
         .add-icon
           padding-right: 0.35rem
 
-      .line-icon
-        margin-top: 8px
+      hr
+        width: 100%
+        border: 0
+        border-top: 1px solid $grey-color
+        margin-top: 5px !important
+        margin-bottom: 0 !important
         
       ::placeholder 
         color: $grey-color
-        font-size: 16px
+        font-size: $basic-font
 
     input:focus
       outline: none 
@@ -123,5 +134,5 @@
     padding: 8px 16px
 
   h5
-    font-size: 16px
+    font-size: $basic-font
     font-weight: bold
