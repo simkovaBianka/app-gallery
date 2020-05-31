@@ -6,7 +6,7 @@ export class Constants {
     static readonly HEADER_TEXT: string = 'fotogaléria';
     static readonly FOOTER_TEXT: string = 'webdesign.bart.sk';
 
-    static readonly DEFAULT_IMAGE = 'assets/images/noimage.svg';
+    static readonly DEFAULT_IMAGE: string = 'assets/images/noimage.svg';
 
-    static readonly BASE_URL = 'http://api.programator.sk';
+    static readonly BASE_URL: string = 'http://api.programator.sk';
 }

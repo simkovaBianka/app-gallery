@@ -102,8 +102,8 @@ export class ItemListComponent implements OnInit, OnDestroy {
       const fullPath = `${this.title}/${image.name}`;
 
       this.dataService.addImage(fullPath, image).subscribe((data) => {
-        // TODO
         console.log(data);
+        this.itemsList.push(data); // update view
       });
     });
   }

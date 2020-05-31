@@ -108,7 +108,7 @@ export class DataService {
   /**
    * Upload one image to the gallery.
    * @param path - Image name(path)
-   * @param image - Image object (File)
+   * @param image - Image object(File)
    */
   addImage(path: string, image: File): Observable<any> {
     const requestUrl = `${this.baseUrl}/gallery/${path}`;
