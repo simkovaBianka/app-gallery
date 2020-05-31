@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { DataService } from '../../service/data.service';
@@ -6,6 +6,7 @@ import { SharedService } from 'src/app/service/shared.service';
 
 import { Item } from '../../shared/item';
 import { Constants } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'item-list',
@@ -13,7 +14,9 @@ import { Constants } from 'src/app/shared/constants';
   styleUrls: ['./item-list.component.sass'],
   providers: [DataService]
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent implements OnInit, OnDestroy {
+  private viewDataSubscription: Subscription;
+  private routeSubscription: Subscription;
 
   isCategoriesView: boolean;
   itemsList: Item[] = [];
@@ -27,12 +30,12 @@ export class ItemListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.sharedService.currentViewData.subscribe(data => {
+    this.viewDataSubscription = this.sharedService.currentViewData.subscribe(data => {
       this.title = data.title;
       this.isCategoriesView = data.isCategoriesView;
     })
 
-    this.route.params.subscribe(params => {
+    this.routeSubscription = this.route.params.subscribe(params => {
       let path: string = params['path'];
       path ? this.getImages(path) : this.getGalleries();
     });
@@ -143,5 +146,10 @@ export class ItemListComponent implements OnInit {
     for (const item of files) {
       this.imagesToUpload.push(item);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.viewDataSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 }

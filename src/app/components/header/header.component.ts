@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { SharedService } from 'src/app/service/shared.service';
 import { Constants } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'header',
@@ -9,7 +10,9 @@ import { Constants } from 'src/app/shared/constants';
   styleUrls: ['./header.component.sass']
 })
 
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  private viewDataSubscription: Subscription;
+  private backgroundImageSubscription: Subscription;
 
   backgroundImage: string;
   defaultImage = Constants.DEFAULT_IMAGE;
@@ -22,7 +25,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.sharedService.currentViewData.subscribe(data => {
+    this.viewDataSubscription = this.sharedService.currentViewData.subscribe(data => {
       this.title = data.title;
       this.isCategoriesView = data.isCategoriesView;
     });
@@ -30,7 +33,7 @@ export class HeaderComponent implements OnInit {
     /**
      * Update background(header) image when onHover on item is triggered.
      */
-    this.sharedService.currentbackgroundImageSource.subscribe(source =>
+    this.backgroundImageSubscription = this.sharedService.currentbackgroundImageSource.subscribe(source =>
       this.backgroundImage = source
     );
   }
@@ -43,4 +46,8 @@ export class HeaderComponent implements OnInit {
     this.location.back();
   }
 
+  ngOnDestroy(): void {
+    this.viewDataSubscription.unsubscribe();
+    this.backgroundImageSubscription.unsubscribe();
+  }
 }

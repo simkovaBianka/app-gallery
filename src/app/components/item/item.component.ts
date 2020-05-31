@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DataService } from 'src/app/service/data.service';
@@ -6,6 +6,7 @@ import { SharedService } from 'src/app/service/shared.service';
 
 import { Item } from '../../shared/item';
 import { Constants } from 'src/app/shared/constants';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'item',
@@ -14,7 +15,9 @@ import { Constants } from 'src/app/shared/constants';
   providers: [DataService]
 })
 
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit, OnDestroy {
+  private viewDataSubscription: Subscription;
+
   @Input() index: number;
   @Input() itemsList: Item[];
 
@@ -28,7 +31,8 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.sharedService.currentViewData.subscribe(data => this.isCategoriesView = data.isCategoriesView);
+    this.viewDataSubscription =
+      this.sharedService.currentViewData.subscribe(data => this.isCategoriesView = data.isCategoriesView);
 
     let path: string = this.isCategoriesView ? (this.itemsList[this.index].image?.fullpath || '')
       : (this.itemsList[this.index]).fullpath;
@@ -89,5 +93,8 @@ export class ItemComponent implements OnInit {
       });
     }
   }
-
+  
+  ngOnDestroy(): void {
+    this.viewDataSubscription.unsubscribe();
+  }
 }
