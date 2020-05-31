@@ -49,7 +49,7 @@ export class ItemComponent implements OnInit, OnDestroy {
    * @param imagePath - Image fullpath
    */
   getImageObject(index: number, imagePath: string) {
-    this.dataService.getImage(imagePath, 270, 222).subscribe((blob) => {
+    this.dataService.getImage(imagePath, 445, 392).subscribe((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onload = () => {
@@ -57,7 +57,7 @@ export class ItemComponent implements OnInit, OnDestroy {
       };
     });
 
-    this.dataService.getImage(imagePath, 0, 600).subscribe((blob) => {
+    this.dataService.getImage(imagePath, 0, 610).subscribe((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onload = () => {
