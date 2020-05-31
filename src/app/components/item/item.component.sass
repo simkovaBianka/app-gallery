@@ -1,23 +1,25 @@
-@import "../../../style/colors"
-@import "../../../style/fonts"
-@import "../../../style/breakpoints"
+@import "src/style/colors"
+@import "src/style/sizes"
+@import "src/style/breakpoints"
 
 @include media-breakpoint-up(xxxl)
   .card
-    height: 392px !important
-    width: 445px !important
+    height: $card-height-xl !important
+    width: $card-width-xl !important
   
     .card-text
       padding: 26px !important
       font-size: 24px !important
 
   #showImageModal 
+    .modal-xxxl
+      max-width: 900px !important
     .close
       font-size: $basic-font-xl !important
 
       img 
         height: 26px
-    
+
     .carousel-control-prev 
       left: -140px
 
@@ -27,10 +29,22 @@
     .carousel-control-prev-icon, .carousel-control-next-icon
       height: 40px
       width: 40px
-    
+
+@include media-breakpoint-up(md)
+  .carousel-control-prev 
+    left: -70px
+
+  .carousel-control-next 
+    right: -70px
+
+@include media-breakpoint-down(sm)
+  .carousel-item 
+    img 
+      height: 60vw !important
+
 .card
-  height: 222px
-  width: 255px
+  height: $card-height-sm
+  width: $card-width-sm
   cursor: pointer
   background-color: $background-color
 
@@ -87,29 +101,11 @@
       text-shadow: none
       padding: 0 1rem 0 0
 
-@include media-breakpoint-up(md)
-  .carousel-control-prev 
-    left: -70px
-
-  .carousel-control-next 
-    right: -70px
-
-
-.carousel-item 
-  img 
-    height: 60vw
-    -o-object-fit: cover
-    object-fit: cover
-    
-@include media-breakpoint-up(xs)
   .carousel-item 
     img 
       height: 50vh
-      width: 50vw
-
-.modal-dialog
-  max-width: 50vw !important
-  max-height: 50vh !important
+      -o-object-fit: cover
+      object-fit: cover
 
 .lazy-load.ng-lazyloaded 
   -webkit-animation: fadein ease 1.5s

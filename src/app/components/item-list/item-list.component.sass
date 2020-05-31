@@ -1,11 +1,11 @@
-@import "../../../style/colors"
-@import "../../../style/fonts"
-@import "../../../style/breakpoints"
+@import "src/style/colors"
+@import "src/style/sizes"
+@import "src/style/breakpoints"
 
 @include media-breakpoint-up(xxxl)
   .card
-    height: 392px !important
-    width: 445px !important
+    height: $card-height-xl !important
+    width: $card-width-xl !important
 
     span
       font-size: 30px !important
@@ -14,28 +14,82 @@
       height: 56px !important
 
   #addGalleryModal, #addImageModal 
+    .modal-xxxl
+      max-width: 900px !important
+
     .close
       font-size: $basic-font-xl !important
+      
+      img 
+        height: 26px
+        
     .modal-title
       font-size: 30px !important
 
-    .add-image-btn
+    .input-group
+      padding-bottom: 28px !important
+      margin-top: 85px !important
+
+      input
+        font-size: $basic-font-xl !important
+
+    ::-webkit-input-placeholder 
+      font-size: $basic-font-xl !important
+
+    :-moz-placeholder 
+      font-size: $basic-font-xl!important
+    
+    ::-moz-placeholder 
+      font-size: $basic-font-xl !important
+
+    .btn
       width: 160px !important
       height: 48px !important
+
+      span
+        font-size: $basic-font-xl !important
+
+      .add-icon 
+        height: 26px
+
+  .dropzone 
+    width: $dropzone-width-xl !important
+    height: $dropzone-height-xl !important
     
+    label 
+      width: 307px !important
+      height: 52px !important
+      font-size: $basic-font-xl !important
+    h5
+      font-size: $basic-font-xl !important
+    img
+      width: 40px !important
+
+@include media-breakpoint-down(sm)
+  .btn
+    width: 45px !important
+
+    span
+      display: none !important
+
+    .add-icon 
+      padding-right: 0px !important
+
+  .dropzone 
+    width: $dropzone-width-sm !important
+    height: $dropzone-height-sm !important
+    
+    label 
+      width: 170px !important
 
 .card
-  height: 222px
-  width: 255px
-  cursor: pointer
+  height: $card-height-sm
+  width: $card-width-sm
   background-color: $background-color
+  cursor: pointer
 
   span
     color: $grey-color
-
-.modal-dialog
-  max-width: 40vw !important
-  max-height: 50vh !important
 
 #addGalleryModal, #addImageModal 
   
@@ -104,8 +158,8 @@
 
 .dropzone 
   color: gray
-  width: 460px
-  height: 220px
+  width: $dropzone-width
+  height: $dropzone-height
   padding: 2rem
   text-align: center
   border: dashed 2px $grey-color

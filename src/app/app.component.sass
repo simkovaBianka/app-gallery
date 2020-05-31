@@ -1,15 +1,16 @@
-@import "../style/colors"
-@import "../style/breakpoints"
+@import "src/style/colors"
+@import "src/style/sizes"
+@import "src/style/breakpoints"
 
 .header-text
     position: absolute
     z-index: 1
     margin-top: 40px
-    font-size: 24px
+    font-size: $header-font
     line-height: 1.291
 
 .footer-text
-    font-size: 14px
+    font-size: $footer-font
     color: $grey-color
     line-height: 2.213
 
@@ -23,11 +24,11 @@
         max-width: 2000px !important
 
     .header-text
-        font-size: 34px
+        font-size: $header-font-xl
         margin-top: 80px
     
     .footer-text
-        font-size: 24px
+        font-size: $footer-font-xl
 
 
 
