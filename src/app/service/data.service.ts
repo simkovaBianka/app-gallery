@@ -24,12 +24,12 @@ export class DataService {
     }
     return throwError(
       'Something bad happened; please try again later.');
-  };
+  }
 
   /**
    * Get all galleries with number of images.
    */
-  getAllGalleriesData(): Observable<Object> {
+  getAllGalleriesData(): Observable<any> {
     return this.getGalleries().pipe(
       switchMap((galleries: any) => {
         const obs$ = galleries['galleries'].map(item => {
@@ -39,7 +39,7 @@ export class DataService {
               catchError(err => {
                 return of(err);
               })
-            )
+            );
         });
         return forkJoin(obs$)
           .pipe(
@@ -51,14 +51,14 @@ export class DataService {
             })
           );
       })
-    )
+    );
   }
 
   /**
    * Get all galleries.
    */
-  getGalleries(): Observable<Object> {
-    let requestUrl: string = `${this.baseUrl}/gallery`;
+  getGalleries(): Observable<any> {
+    const requestUrl = `${this.baseUrl}/gallery`;
 
     return this.http.get(requestUrl).pipe(
       catchError(this.handleError)
@@ -69,8 +69,8 @@ export class DataService {
    * Get all images from the gallery.
    * @param path - Name(path) of gallery
    */
-  getImages(path: string): Observable<Object> {
-    let requestUrl: string = `${this.baseUrl}/gallery/${path}`;
+  getImages(path: string): Observable<any> {
+    const requestUrl = `${this.baseUrl}/gallery/${path}`;
 
     return this.http.get(requestUrl).pipe(
       catchError(this.handleError)
@@ -84,7 +84,7 @@ export class DataService {
    * @param heigth - Image height, default 0, calculated according to the width while maintaining the aspect ratio
    */
   getImage(path: string, width: number = 0, heigth: number = 0): Observable<Blob> {
-    let requestUrl: string = `${this.baseUrl}/images/${width}x${heigth}/${path}`;
+    const requestUrl = `${this.baseUrl}/images/${width}x${heigth}/${path}`;
 
     return this.http.get(requestUrl, { responseType: 'blob' }).pipe(
       catchError(this.handleError)
@@ -96,9 +96,9 @@ export class DataService {
    * @param name - Name of created gallery
    */
   addGallery(name: string): Observable<any> {
-    let requestUrl: string = `${this.baseUrl}/gallery`;
+    const requestUrl = `${this.baseUrl}/gallery`;
 
-    let data = { 'name': name };
+    const data = { 'name': name };
     return this.http.post(requestUrl, data)
       .pipe(
         catchError(this.handleError)
@@ -111,12 +111,12 @@ export class DataService {
    * @param image - Image object (File)
    */
   addImage(path: string, image: File): Observable<any> {
-    let requestUrl: string = `${this.baseUrl}/gallery/${path}`;
+    const requestUrl = `${this.baseUrl}/gallery/${path}`;
 
-    let data = new FormData();
+    const data = new FormData();
     data.append('image', image);
 
-    let httpOptions = {
+    const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'multipart/form-data; boundary=--boundary'
       })

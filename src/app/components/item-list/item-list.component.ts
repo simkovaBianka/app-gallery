@@ -9,7 +9,7 @@ import { Constants } from 'src/app/shared/constants';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'item-list',
+  selector: 'app-item-list',
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.sass'],
   providers: [DataService]
@@ -23,6 +23,9 @@ export class ItemListComponent implements OnInit, OnDestroy {
   itemText: string;
   title: string;
 
+  // modal upload files(images)
+  imagesToUpload: File[] = [];
+
   constructor(
     private dataService: DataService,
     private sharedService: SharedService,
@@ -33,10 +36,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.viewDataSubscription = this.sharedService.currentViewData.subscribe(data => {
       this.title = data.title;
       this.isCategoriesView = data.isCategoriesView;
-    })
+    });
 
     this.routeSubscription = this.route.params.subscribe(params => {
-      let path: string = params['path'];
+      const path: string = params['path'];
       path ? this.getImages(path) : this.getGalleries();
     });
   }
@@ -55,11 +58,11 @@ export class ItemListComponent implements OnInit, OnDestroy {
    */
   getGalleries(): void {
     this.itemText = Constants.CATEGORY_TEXT;
-    this.sharedService.changeViewData({ "title": Constants.TITLE_TEXT, "isCategoriesView": true });
+    this.sharedService.changeViewData({ title: Constants.TITLE_TEXT, isCategoriesView: true });
 
     this.dataService.getAllGalleriesData().subscribe((data) => {
       this.itemsList = data['galleries'];
-    })
+    });
   }
 
   /**
@@ -69,7 +72,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   getImages(path: string): void {
     this.dataService.getImages(path).subscribe((data) => {
       this.itemText = Constants.IMAGE_TEXT;
-      this.sharedService.changeViewData({ "title": path, "isCategoriesView": false });
+      this.sharedService.changeViewData({ title: path, isCategoriesView: false });
       this.itemsList = data['images'];
     });
   }
@@ -79,13 +82,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
    * @param name - Name of new gallery
    */
   addGallery(name: string) {
-    // remove '/' character from name 
-    let regex = "/";
-    let replacedName = name.replace(regex, "");
+    // remove '/' character from name
+    const regex = '/';
+    const replacedName = name.replace(regex, '');
 
     if (replacedName) {
       this.dataService.addGallery(replacedName).subscribe((data) => {
-        data.imageSource = Constants.DEFAULT_IMAGE // without thumbnail image
+        data.imageSource = Constants.DEFAULT_IMAGE; // without thumbnail image
         this.itemsList.push(data); // update view
       });
     }
@@ -96,7 +99,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
    */
   addImage() {
     this.imagesToUpload.forEach(image => {
-      let fullPath: string = `${this.title}/${image.name}`;
+      const fullPath = `${this.title}/${image.name}`;
 
       this.dataService.addImage(fullPath, image).subscribe((data) => {
         // TODO
@@ -106,7 +109,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Change background(header) image and show Gallery info 
+   * Change background(header) image and show Gallery info
    * (number of images in gallery) when onHover is triggered on item.
    * @param index - Index of item from itemsList
    */
@@ -114,15 +117,11 @@ export class ItemListComponent implements OnInit, OnDestroy {
     // only in categories view
     if (this.isCategoriesView) {
       (this.itemsList[index]).hover = true;
-      let thumbnailImage = (<Item>this.itemsList[index]).thumbnailImage;
-      let fullSizeImage = (<Item>this.itemsList[index]).realSizeImage;
+      const thumbnailImage = this.itemsList[index].thumbnailImage;
+      const fullSizeImage = this.itemsList[index].realSizeImage;
       this.changeBackground(fullSizeImage ? fullSizeImage : thumbnailImage);
     }
   }
-
-
-  // modal upload files(images)
-  imagesToUpload: File[] = [];
 
   /**
    * on file drop handler

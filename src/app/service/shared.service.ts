@@ -12,8 +12,8 @@ export class SharedService {
    */
 
   private viewData = new BehaviorSubject({
-    "title": "",
-    "isCategoriesView": true
+    title: '',
+    isCategoriesView: true
   });
   private backgroundImageSource = new BehaviorSubject(Constants.DEFAULT_IMAGE);
 
@@ -22,7 +22,7 @@ export class SharedService {
 
   constructor() { }
 
-  changeViewData(data: { "title": string, "isCategoriesView": boolean }) {
+  changeViewData(data: { title: string, isCategoriesView: boolean }) {
     this.viewData.next(data);
   }
 

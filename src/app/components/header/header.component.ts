@@ -5,7 +5,7 @@ import { Constants } from 'src/app/shared/constants';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'header',
+  selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.sass']
 })
