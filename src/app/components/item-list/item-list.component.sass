@@ -64,6 +64,15 @@
 
 @include media-breakpoint-down(xxs)
   #addGalleryModal, #addImageModal 
+    ::-webkit-input-placeholder 
+      font-size: 14px !important
+
+    :-moz-placeholder 
+      font-size: 14px !important
+    
+    ::-moz-placeholder 
+      font-size: 14px  !important
+
     .btn
       width: 45px !important
 
@@ -194,4 +203,4 @@
   img.delete
     opacity: 0.5
     margin-left: 0.5rem
-    cursor: pointer    
+    cursor: pointer
