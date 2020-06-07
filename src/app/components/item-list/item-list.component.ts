@@ -11,8 +11,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
-  styleUrls: ['./item-list.component.sass'],
-  providers: [DataService]
+  styleUrls: ['./item-list.component.sass']
 })
 export class ItemListComponent implements OnInit, OnDestroy {
   private viewDataSubscription: Subscription;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, forkJoin, of } from 'rxjs';
-import { catchError, mergeMap, switchMap } from 'rxjs/operators';
+import { catchError, mergeMap, switchMap, shareReplay } from 'rxjs/operators';
 import { Constants } from '../shared/constants';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { Constants } from '../shared/constants';
 })
 
 export class DataService {
+
+  cache = {};
 
   baseUrl: string = Constants.BASE_URL;
 
@@ -30,7 +32,13 @@ export class DataService {
    * Get all galleries with number of images.
    */
   getAllGalleriesData(): Observable<any> {
-    return this.getGalleries().pipe(
+
+    if (this.cache['all-galleries']) {
+      return this.cache['all-galleries'];
+    }
+
+    this.cache['all-galleries'] = this.getGalleries().pipe(
+      shareReplay(1),
       switchMap((galleries: any) => {
         const obs$ = galleries['galleries'].map(item => {
 
@@ -50,8 +58,14 @@ export class DataService {
               return of(galleries);
             })
           );
-      })
+      },
+        catchError(error => {
+          delete this.cache['all-galleries'];
+          return this.handleError(error)
+        }))
     );
+
+    return this.cache['all-galleries'];
   }
 
   /**
@@ -70,11 +84,20 @@ export class DataService {
    * @param path - Name(path) of gallery
    */
   getImages(path: string): Observable<any> {
+    if (this.cache[path]) {
+      return this.cache[path];
+    }
     const requestUrl = `${this.baseUrl}/gallery/${path}`;
 
-    return this.http.get(requestUrl).pipe(
-      catchError(this.handleError)
+    this.cache[path] = this.http.get(requestUrl).pipe(
+      shareReplay(1),
+      catchError(error => {
+        delete this.cache[path];
+        return this.handleError(error)
+      })
     );
+
+    return this.cache[path];
   }
 
   /**
@@ -84,11 +107,20 @@ export class DataService {
    * @param heigth - Image height, default 0, calculated according to the width while maintaining the aspect ratio
    */
   getImage(path: string, width: number = 0, heigth: number = 0): Observable<Blob> {
+    if (this.cache[path]) {
+      return this.cache[path];
+    }
     const requestUrl = `${this.baseUrl}/images/${width}x${heigth}/${path}`;
 
-    return this.http.get(requestUrl, { responseType: 'blob' }).pipe(
-      catchError(this.handleError)
+    this.cache[path] = this.http.get(requestUrl, { responseType: 'blob' }).pipe(
+      shareReplay(1),
+      catchError(error => {
+        delete this.cache[path];
+        return this.handleError(error)
+      })
     );
+
+    return this.cache[path];
   }
 
   /**
