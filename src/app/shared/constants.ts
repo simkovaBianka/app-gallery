@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+
 export class Constants {
     static readonly CATEGORY_TEXT: string = 'Pridať kategóriu';
     static readonly IMAGE_TEXT: string = 'Pridať fotky';
@@ -8,5 +10,5 @@ export class Constants {
 
     static readonly DEFAULT_IMAGE: string = 'assets/images/noimage.svg';
 
-    static readonly BASE_URL: string = 'http://api.programator.sk';
+    static readonly BASE_URL: string = environment.baseUrl;;
 }
