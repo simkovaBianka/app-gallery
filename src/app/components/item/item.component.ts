@@ -73,9 +73,10 @@ export class ItemComponent implements OnInit, OnDestroy {
    * Navigate to gallery when onClick occured on item.
    * @param path - Image path (name)
    */
-  navigate(path: string) {
+  itemClick(item: Item) {
+    item.hover = false;
     if (this.isCategoriesView) {
-      const fullPath = `/gallery/${path}`;
+      const fullPath = `/gallery/${item.path}`;
       this.router.navigateByUrl(fullPath).then(response => {
         if (response) {
           console.log('Navigation is successful!');
@@ -83,6 +84,9 @@ export class ItemComponent implements OnInit, OnDestroy {
           console.log('Navigation has failed!');
         }
       });
+    }
+    else {
+      this.openImageCarousel();
     }
   }
 

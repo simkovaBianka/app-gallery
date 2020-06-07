@@ -1,5 +1,4 @@
-<div class="card border-0 shadow-sm item" (click)="isCategoriesView ? 
-    navigate(itemsList[index].path) : openImageCarousel()">
+<div class="card border-0 shadow-sm item" (click)="itemClick(itemsList[index])">
     <button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#showImageModal"></button>
     <div class="card-body d-flex flex-column col">
         <div [defaultImage]="defaultImage" [lazyLoad]="itemsList[index].thumbnailImage"

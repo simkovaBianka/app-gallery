@@ -17,7 +17,8 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse, cacheKey?: string) {
-    delete this.cache[cacheKey]
+    if (cacheKey) delete this.cache[cacheKey];
+
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
