@@ -16,7 +16,8 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse, cacheKey?: string) {
+    delete this.cache[cacheKey]
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
@@ -44,8 +45,8 @@ export class DataService {
 
           return this.getImages(item.path)
             .pipe(
-              catchError(err => {
-                return of(err);
+              catchError((error: HttpErrorResponse) => {
+                return this.handleError(error, 'all-galleries');
               })
             );
         });
@@ -56,13 +57,14 @@ export class DataService {
                 element.size = listOfGalleriesWithImages[index].images.length;
               });
               return of(galleries);
-            })
+            }),
+            catchError((error: HttpErrorResponse) => {
+              return this.handleError(error, 'all-galleries');
+            }
+            )
           );
-      },
-        catchError(error => {
-          delete this.cache['all-galleries'];
-          return this.handleError(error)
-        }))
+      }
+      )
     );
 
     return this.cache['all-galleries'];
@@ -75,7 +77,9 @@ export class DataService {
     const requestUrl = `${this.baseUrl}/gallery`;
 
     return this.http.get(requestUrl).pipe(
-      catchError(this.handleError)
+      catchError((error: HttpErrorResponse) => {
+        return this.handleError(error);
+      })
     );
   }
 
@@ -91,10 +95,10 @@ export class DataService {
 
     this.cache[path] = this.http.get(requestUrl).pipe(
       shareReplay(1),
-      catchError(error => {
-        delete this.cache[path];
-        return this.handleError(error)
-      })
+      catchError((error: HttpErrorResponse) => {
+        return this.handleError(error, path);
+      }
+      )
     );
 
     return this.cache[path];
@@ -114,9 +118,8 @@ export class DataService {
 
     this.cache[path] = this.http.get(requestUrl, { responseType: 'blob' }).pipe(
       shareReplay(1),
-      catchError(error => {
-        delete this.cache[path];
-        return this.handleError(error)
+      catchError((error: HttpErrorResponse) => {
+        return this.handleError(error, path);
       })
     );
 
@@ -133,7 +136,9 @@ export class DataService {
     const data = { 'name': name };
     return this.http.post(requestUrl, data)
       .pipe(
-        catchError(this.handleError)
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error);
+        })
       );
   }
 
@@ -156,7 +161,9 @@ export class DataService {
 
     return this.http.post(requestUrl, data, httpOptions)
       .pipe(
-        catchError(this.handleError)
+        catchError((error: HttpErrorResponse) => {
+          return this.handleError(error);
+        })
       );
   }
 }
