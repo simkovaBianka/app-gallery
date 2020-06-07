@@ -49,19 +49,12 @@ export class ItemComponent implements OnInit, OnDestroy {
    * @param imagePath - Image fullpath
    */
   getImageObject(index: number, imagePath: string) {
-    this.dataService.getImage(imagePath, 445, 392).subscribe((blob) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onload = () => {
-        this.itemsList[index].thumbnailImage = reader.result as string;
-      };
-    });
-
     this.dataService.getImage(imagePath, 0, 610).subscribe((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onload = () => {
         this.itemsList[index].realSizeImage = reader.result as string;
+        this.itemsList[index].thumbnailImage = reader.result as string;
 
         if (index === 0) {
           this.sharedService.changeBackgroundImage(reader.result as string);
