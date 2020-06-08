@@ -10,5 +10,5 @@ export class Constants {
 
     static readonly DEFAULT_IMAGE: string = 'assets/images/noimage.svg';
 
-    static readonly BASE_URL: string = environment.baseUrl;;
+    static readonly BASE_URL: string = environment.baseUrl;
 }
