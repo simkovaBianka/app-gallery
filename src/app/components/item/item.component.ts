@@ -48,7 +48,8 @@ export class ItemComponent implements OnInit, OnDestroy {
    * @param imagePath - Image fullpath
    */
   getImageObject(index: number, imagePath: string) {
-    this.dataService.getImage(imagePath, 0, 610).subscribe((blob) => {
+    const carouselImageHeight = Math.round(window.innerHeight / 2);
+    this.dataService.getImage(imagePath, 0, carouselImageHeight).subscribe((blob) => {
       const reader = new FileReader();
       reader.readAsDataURL(blob);
       reader.onload = () => {
